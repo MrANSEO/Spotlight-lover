@@ -1,0 +1,86 @@
+git remote set-url origin git@github.com:MrANSEO/Spotlight-lover-project-back-end.git
+
+REINITIALISATION DE LA BD POSTGRESQL
+
+#### 2. **Réinitialisez le mot de passe de `postgres` si nécessaire**
+
+```bash
+sudo -u postgres psql
+```
+
+Puis dans `psql` :
+```sql
+\password postgres
+```
+
+→ Tapez un mot de passe simple, ex: **`postgres123`**
+
+Puis quittez :
+```sql
+\q
+```
+
+#### 3. **Mettez à jour `.env` avec ce mot de passe**
+```env
+DATABASE_URL="postgresql://postgres:postgres123@localhost:5432/spotlight_lover?schema=public"
+```
+
+---
+
+## 🧪 Test final : recréez la base
+
+```bash
+npx prisma migrate reset --force
+
+//////////////////////////////////////////LANCEMENT DU PROJET /////////////////////////////////////////////////////////////////////////////////////////////////
+EXECUTER LE PROJET
+cd /home/user/spotlight-lover
+./start.sh
+
+NAVIGUER EN TANT QUE ADMIN
+URL : http://localhost:5173/admin
+
+Pages disponibles :
+
+/admin - Dashboard (stats globales)
+/admin/users - Gestion utilisateurs
+/admin/videos - Modération vidéos
+/admin/votes - Gestion votes
+/admin/stats - Statistiques avancées
+/admin/settings - Paramètres système
+/admin/logs - Logs d'activité
+
+CREER UN ADMIN
+cd /home/user/spotlight-lover/backend
+npm run create-admin
+
+URLs après démarrage :
+
+Frontend : http://localhost:5173
+Backend API : http://localhost:3000/api
+Swagger : http://localhost:3000/api/docs
+
+---------------------------------------LANCEMENT PRISMA GRAPHIQUEMENT ---------------------------------------------------------------------------------------
+npx prisma studio
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# 1. Démarrer le backend
+cd /home/user/spotlight-lover/backend
+npm run start:dev
+
+# 2. Créer le compte admin via API
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "admin@spotlightlover.cm",
+    "password": "VotreMotDePasseSecurise123!",
+    "username": "Admin Principal",
+    "phone": "+237670000000",
+    "role": "ADMIN"
+  }'
+
+
+# 4. Démarrer le frontend
+npm run dev
+# 4. Démarrer le backend
+npm run start:dev
